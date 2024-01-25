@@ -10,10 +10,14 @@
     'we can just get the average between the two skill levels
     'increment by .1 * difference between the two
     Public data As List(Of Match) = New List(Of Match)
+    Public players As List(Of Player) = New List(Of Player)
 
     Public Sub New()
 
-
+        'Generate players
+        For i As Integer = 1 To 20
+            players.Add(New Player(Rnd() * 4, i))
+        Next
 
         Dim blnSwitch As Boolean = False
         For i As Integer = 1 To 100
@@ -30,7 +34,16 @@
                 score1 = CInt(Math.Ceiling(Rnd() * 6))
                 blnSwitch = True
             End If
-            data.Add(New Match(New Player(p1Skill, CInt(Math.Ceiling(Rnd() * 9))), New Player(p2Skill, CInt(Math.Ceiling(Rnd() * 9))), score1, score2))
+
+            'select players
+            Dim player1 As Integer = CInt(Math.Ceiling(Rnd() * 20))
+            Dim player2 As Integer = CInt(Math.Ceiling(Rnd() * 20))
+            While (player2 = player1)
+                player2 = CInt(Math.Ceiling(Rnd() * 20))
+            End While
+            data.Add(New Match(players(player1 - 1), players(player2 - 1), score1, score2))
         Next
     End Sub
+
+
 End Class

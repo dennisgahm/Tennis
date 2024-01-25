@@ -1,8 +1,8 @@
 ﻿Imports System.Runtime.InteropServices
 
 Public Class Match
-    Dim player1 As Player
-    Dim player2 As Player
+    Public player1 As Player
+    Public player2 As Player
 
     Public score1 As Integer
     Public score2 As Integer

@@ -54,6 +54,19 @@
         For i As Integer = 0 To 99
             RichTextBox1.AppendText(vbNewLine + test.data(i).ToText2())
         Next
+
+        'Before
+        For i As Integer = 0 To 19
+            RichTextBox3.AppendText(i & ": " & test.players(i).skillLevel & vbNewLine)
+        Next
+
+        SkillUpdate3(test)
+
+        'After
+        For i As Integer = 0 To 19
+            RichTextBox3.AppendText(i & ": " & test.players(i).skillLevel & vbNewLine)
+        Next
+
     End Sub
 
     Public Sub SkillUpdate1()
@@ -82,5 +95,24 @@
 
         listPlayers2(0).skillLevel += finalIncrement
         listPlayers2(1).skillLevel -= finalIncrement
+    End Sub
+
+    Public Sub SkillUpdate3(test As DataGenerator)
+        For i As Integer = 0 To 99
+            Dim avg As Double = (test.data(i).player1.skillLevel - test.data(i).player2.skillLevel) / 2.0
+            Dim incrementAmount As Double = Math.Abs(avg / 10.0)
+
+            'calculate magnitude
+            Dim scoreDifference As Integer = Math.Abs(test.data(i).score1 - test.data(i).score2)
+            Dim finalIncrement As Double = incrementAmount * (1 + (scoreDifference / 10.0))
+
+            If (test.data(i).score1 - test.data(i).score2 > 0) Then
+                test.data(i).player1.skillLevel += finalIncrement
+                test.data(i).player2.skillLevel -= finalIncrement
+            Else
+                test.data(i).player1.skillLevel -= finalIncrement
+                test.data(i).player2.skillLevel += finalIncrement
+            End If
+        Next
     End Sub
 End Class
