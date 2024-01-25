@@ -23,21 +23,31 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         'RichTextBox1
         '
         Me.RichTextBox1.Location = New System.Drawing.Point(12, 12)
         Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(707, 393)
+        Me.RichTextBox1.Size = New System.Drawing.Size(628, 393)
         Me.RichTextBox1.TabIndex = 0
         Me.RichTextBox1.Text = ""
+        '
+        'RichTextBox2
+        '
+        Me.RichTextBox2.Location = New System.Drawing.Point(647, 13)
+        Me.RichTextBox2.Name = "RichTextBox2"
+        Me.RichTextBox2.Size = New System.Drawing.Size(548, 392)
+        Me.RichTextBox2.TabIndex = 1
+        Me.RichTextBox2.Text = ""
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(1207, 450)
+        Me.Controls.Add(Me.RichTextBox2)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Name = "Form1"
         Me.Text = "Form1"
@@ -46,4 +56,5 @@ Partial Class Form1
     End Sub
 
     Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents RichTextBox2 As RichTextBox
 End Class

@@ -4,8 +4,8 @@ Public Class Match
     Dim player1 As Player
     Dim player2 As Player
 
-    Dim score1 As Integer
-    Dim score2 As Integer
+    Public score1 As Integer
+    Public score2 As Integer
 
     Public Sub New(ByVal p1 As Player, p2 As Player, s1 As Integer, s2 As Integer)
         player1 = p1
