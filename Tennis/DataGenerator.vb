@@ -1,4 +1,14 @@
 ﻿Public Class DataGenerator
+
+    'calculate number of wins (biggest points)
+    'calculate number of games (more points)
+    'the magnitude of the win is the number of games it won by
+
+    'These two points should be two different dimensions
+    'take into account the current skill level
+    'if a low skill level beats a higher skill level, player1's level increases more
+    'we can just get the average between the two skill levels
+    'increment by .1 * difference between the two
     Public data As List(Of Match) = New List(Of Match)
 
     Public Sub New()
