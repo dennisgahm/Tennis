@@ -5,6 +5,9 @@
 
     Dim list2 As List(Of Match) = New List(Of Match)
     Dim listPlayers2 As List(Of Player) = New List(Of Player)
+
+    Dim list3 As List(Of MatchDoubles) = New List(Of MatchDoubles)
+    Dim listPlayers3 As List(Of Player) = New List(Of Player)
     Private Sub RichTextBox1_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox1.TextChanged
 
     End Sub
@@ -45,7 +48,32 @@
 
         'Print
         RichTextBox2.AppendText("Player 3: " & listPlayers2(0).skillLevel & vbNewLine)
-        RichTextBox2.AppendText("Player 4: " & listPlayers2(1).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 4: " & listPlayers2(1).skillLevel & vbNewLine & vbNewLine)
+
+        'List3
+
+        'Example match list where lower player beats higher player
+        listPlayers3.Add(New Player(1.0, 4))
+        listPlayers3.Add(New Player(2.0, 5))
+        listPlayers3.Add(New Player(3.0, 6))
+        listPlayers3.Add(New Player(4.0, 7))
+        list3.Add(New MatchDoubles(listPlayers3(0), listPlayers3(1), listPlayers3(2), listPlayers3(3), 6, 5, 5, 6, 6, 0))
+
+        'Print
+        RichTextBox2.AppendText("Doubles: " & vbNewLine)
+        RichTextBox2.AppendText("Player 1: " & listPlayers3(0).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 2: " & listPlayers3(1).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 3: " & listPlayers3(2).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 4: " & listPlayers3(3).skillLevel & vbNewLine & vbNewLine)
+
+        'Do skill update
+        SkillUpdate4()
+
+        'Print
+        RichTextBox2.AppendText("Player 1: " & listPlayers3(0).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 2: " & listPlayers3(1).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 3: " & listPlayers3(2).skillLevel & vbNewLine)
+        RichTextBox2.AppendText("Player 4: " & listPlayers3(3).skillLevel & vbNewLine & vbNewLine)
 
 
 
@@ -114,5 +142,86 @@
                 test.data(i).player2.skillLevel += finalIncrement
             End If
         Next
+    End Sub
+
+    Public Sub SkillUpdate4()
+
+        'Calculate average
+        Dim avg1A As Double = (listPlayers3(2).skillLevel - listPlayers3(0).skillLevel) / 2.0
+        Dim avg1B As Double = (listPlayers3(3).skillLevel - listPlayers3(0).skillLevel) / 2.0
+
+        Dim avg2A As Double = (listPlayers3(2).skillLevel - listPlayers3(1).skillLevel) / 2.0
+        Dim avg2B As Double = (listPlayers3(3).skillLevel - listPlayers3(1).skillLevel) / 2.0
+
+        'average increment amount for each couple of player player 1-3,1-4 and player 2-3,2-4
+        Dim incrementAmount1A As Double = Math.Abs(avg1A / 10.0)
+        Dim incrementAmount1B As Double = Math.Abs(avg1B / 10.0)
+        Dim incrementAmount2A As Double = Math.Abs(avg2A / 10.0)
+        Dim incrementAmount2B As Double = Math.Abs(avg2B / 10.0)
+
+        'calculate magnitude
+        'middleIncrement1 goes to all incrementAmounts
+        '   for each score
+        Dim scoreDifference1 As Integer = Math.Abs(list3(0).score1a - list3(0).score1b)
+        Dim middleIncrement1 As Double = scoreDifference1 / 10.0
+
+        Dim scoreDifference2 As Integer = Math.Abs(list3(0).score2a - list3(0).score2b)
+        Dim middleIncrement2 As Double = scoreDifference2 / 10.0
+
+        Dim scoreDifference3 As Integer = Math.Abs(list3(0).score3a - list3(0).score3b)
+        Dim middleIncrement3 As Double = scoreDifference3 / 10.0
+
+
+        Dim p1FinalIncrement As Double
+        Dim p2FinalIncrement As Double
+        Dim p3FinalIncrement As Double
+        Dim p4FinalIncrement As Double
+
+        p1FinalIncrement += incrementAmount1A * (1 + (scoreDifference1 / 10.0))
+        p1FinalIncrement -= incrementAmount1A * (1 + (scoreDifference2 / 10.0))
+        p1FinalIncrement += incrementAmount1A * (1 + (scoreDifference3 / 10.0))
+
+        p1FinalIncrement += incrementAmount1B * (1 + (scoreDifference1 / 10.0))
+        p1FinalIncrement -= incrementAmount1B * (1 + (scoreDifference2 / 10.0))
+        p1FinalIncrement += incrementAmount1B * (1 + (scoreDifference3 / 10.0))
+
+        p1FinalIncrement *= 2
+
+        p2FinalIncrement += incrementAmount2A * (1 + (scoreDifference1 / 10.0))
+        p2FinalIncrement -= incrementAmount2A * (1 + (scoreDifference2 / 10.0))
+        p2FinalIncrement += incrementAmount2A * (1 + (scoreDifference3 / 10.0))
+
+        p2FinalIncrement += incrementAmount2B * (1 + (scoreDifference1 / 10.0))
+        p2FinalIncrement -= incrementAmount2B * (1 + (scoreDifference2 / 10.0))
+        p2FinalIncrement += incrementAmount2B * (1 + (scoreDifference3 / 10.0))
+
+        p2FinalIncrement *= 2
+
+        p3FinalIncrement -= incrementAmount1A * (1 + (scoreDifference1 / 10.0))
+        p3FinalIncrement += incrementAmount1A * (1 + (scoreDifference2 / 10.0))
+        p3FinalIncrement -= incrementAmount1A * (1 + (scoreDifference3 / 10.0))
+
+        p3FinalIncrement -= incrementAmount2A * (1 + (scoreDifference1 / 10.0))
+        p3FinalIncrement += incrementAmount2A * (1 + (scoreDifference2 / 10.0))
+        p3FinalIncrement -= incrementAmount2A * (1 + (scoreDifference3 / 10.0))
+
+        p3FinalIncrement *= 2
+
+        p4FinalIncrement -= incrementAmount2B * (1 + (scoreDifference1 / 10.0))
+        p4FinalIncrement += incrementAmount2B * (1 + (scoreDifference2 / 10.0))
+        p4FinalIncrement -= incrementAmount2B * (1 + (scoreDifference3 / 10.0))
+
+        p4FinalIncrement -= incrementAmount2B * (1 + (scoreDifference1 / 10.0))
+        p4FinalIncrement += incrementAmount2B * (1 + (scoreDifference2 / 10.0))
+        p4FinalIncrement -= incrementAmount2B * (1 + (scoreDifference3 / 10.0))
+
+        p4FinalIncrement *= 2
+
+
+
+        listPlayers3(0).skillLevel += p1FinalIncrement
+        listPlayers3(1).skillLevel += p2FinalIncrement
+        listPlayers3(2).skillLevel += p3FinalIncrement
+        listPlayers3(3).skillLevel += p4FinalIncrement
     End Sub
 End Class
